@@ -6,15 +6,15 @@ using std::min, std::max;
 
 void Sphere::expand(AABB &bounds) const {
     for (unsigned short i = 0; i < 3; ++i) {
-        bounds.t_min[i] = min(bounds.t_min[i], position[i] - radius);
-        bounds.t_max[i] = max(bounds.t_max[i], position[i] + radius);
+        bounds.bb_min[i] = min(bounds.bb_min[i], position[i] - radius);
+        bounds.bb_max[i] = max(bounds.bb_max[i], position[i] + radius);
     }
 }
 
 void Triangle::expand(AABB &bounds) const {
     for (unsigned short i = 0; i < 3; ++i) {
-        bounds.t_min[i] = min({bounds.t_min[i], a[i], b[i], c[i]});
-        bounds.t_max[i] = max({bounds.t_max[i], a[i], b[i], c[i]});
+        bounds.bb_min[i] = min({bounds.bb_min[i], a[i], b[i], c[i]});
+        bounds.bb_max[i] = max({bounds.bb_max[i], a[i], b[i], c[i]});
     }
 }
 

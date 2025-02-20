@@ -4,13 +4,16 @@
 using std::min, std::max;
 
 bool AABB::hit_by(const Ray &ray) const {
-    float t[6];
+    //we want to find the farthest entrace and closest exit to the box
+    //if the exit is closer than the entrance, there is no hit
+    float entry = 0.0f;
+    float exit = INFINITY;
     for (int i = 0; i < 3; ++i) {
-        t[i] = (t_min[i] - ray.origin[i]) / ray.direction[i];
-        t[i+3] = (t_max[i] - ray.origin[i]) / ray.direction[i];
-        if (t[i] > t[i+3]) std::swap(t[i], t[i+3]);
+        float near = (bb_min[i] - ray.origin[i]) / ray.direction[i];
+        float far = (bb_max[i] - ray.origin[i]) / ray.direction[i];
+        if (far < near) std::swap(near, far);
+        entry = max(entry, near);
+        exit = min(exit, far);
     }
-    float entry = max({t[0], t[1], t[2]});
-    float exit = min({t[3], t[4], t[5]});
-    return exit > 0 && entry < exit;
+    return entry < exit;
 }

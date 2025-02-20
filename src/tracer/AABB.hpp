@@ -8,8 +8,8 @@ class Ray;
 
 class AABB {
 public:
-    AABB() : t_min(INFINITY, INFINITY, INFINITY), t_max(-INFINITY, -INFINITY, -INFINITY) {}
-    Vector3 t_min, t_max;
+    AABB() : bb_min(INFINITY, INFINITY, INFINITY), bb_max(-INFINITY, -INFINITY, -INFINITY) {}
+    Vector3 bb_min, bb_max;
 
     bool hit_by(const Ray &ray) const;
 

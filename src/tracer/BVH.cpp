@@ -13,12 +13,12 @@ BVH::BVH(std::vector<const Shape*> &objects, unsigned int depth) {
     for (const Shape *shape : objects) {
         shape->expand(bounds);
     }
-    Vector3 size = bounds.t_max - bounds.t_min;
+    Vector3 size = bounds.bb_max - bounds.bb_min;
     unsigned int axis = size[0] > size[1] ? 0 : 1;
     axis = size[axis] > size[2] ? axis : 2;
     std::vector<const Shape*> left_objects, right_objects;
     for (const Shape *shape : objects) {
-        if (shape->position[axis] < bounds.t_min[axis] + size[axis] / 2) {
+        if (shape->position[axis] < bounds.bb_min[axis] + size[axis] / 2) {
             left_objects.push_back(shape);
         } else {
             right_objects.push_back(shape);
